@@ -40,8 +40,9 @@ public class GroupContactPannel extends ContactPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
+                if (e.getClickCount() == 1 && !superConv.getRoom().isGroupChat) {
                     Room room = new Room();
+                    room.isGroupChat=true;
                     room.contactVector = superConv.getRoom().contactVector;
                     //room.contactVector.add(new Contact(gui.user.getUserEmail(), TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, null, WIDTH));
                     room.contactVector.add(cont);
@@ -55,13 +56,22 @@ public class GroupContactPannel extends ContactPanel {
                         }
                     }*/
                     if(!gui.rooms.containsKey(room.getRoomId())){
-                        conversation conv = new conversation(gui);
+                        conversation conv = new conversation(gui,room);
                         conv.setRoomId(room.getRoomId());
                         conv.setRoom(room);
                         gui.rooms.put(room.getRoomId(), conv);
                         conv.setVisible(true);
                     }
                     gui.cih.sendMessage(room, new Message(room.getRoomId(), null, "server Message", cont.getName() + " has join the chat group", true));
+                    superConv.friendList.contactsPanel.remove(c);
+                    superConv.friendList.dispose();
+                }
+                if (e.getClickCount() == 1 && superConv.getRoom().isGroupChat) {
+                    //room.contactVector.add(new Contact(gui.user.getUserEmail(), TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, null, WIDTH));
+                    superConv.getRoom().contactVector.add(cont);
+                    gui.cih.sendMessage( superConv.getRoom(), new Message( superConv.getRoom().getRoomId(), null, "server Message", cont.getName() + " has join the chat group", true));
+                    superConv.friendList.contactsPanel.remove(c);
+                    superConv.friendList.dispose();
                 }
             }
 
@@ -83,19 +93,51 @@ public class GroupContactPannel extends ContactPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        name = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
+        img = new javax.swing.JLabel();
+        state = new javax.swing.JLabel();
+
+        name.setText("name");
+
+        status.setText("status");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(name)
+                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(name)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel img;
+    public javax.swing.JLabel name;
+    public javax.swing.JLabel state;
+    public javax.swing.JLabel status;
     // End of variables declaration//GEN-END:variables
 }

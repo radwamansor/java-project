@@ -44,6 +44,7 @@ public class ContactPanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     Room room = new Room();
+                    room.isGroupChat = false;
                     room.contactVector.add(new Contact(gui.user.getUserEmail(), TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, null, WIDTH));
                     room.contactVector.add(cont);
                     if (room.contactVector.get(0).getEmail().compareToIgnoreCase(room.contactVector.get(1).getEmail()) > 0) {
@@ -59,9 +60,9 @@ public class ContactPanel extends javax.swing.JPanel {
                         }
                     }*/
                     if(!gui.rooms.containsKey(room.getRoomId())){
-                        conversation conv = new conversation(gui);
-                        conv.setRoomId(room.getRoomId());
-                        conv.setRoom(room);
+                        conversation conv = new conversation(gui,room);
+                        //conv.setRoomId(room.getRoomId());
+                        //conv.setRoom(room);
                         gui.rooms.put(room.getRoomId(), conv);
                         conv.setVisible(true);
                         //gui.cih.sendMessage(room, null);
@@ -120,17 +121,14 @@ public class ContactPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(name)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(name)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

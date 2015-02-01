@@ -18,6 +18,7 @@ public class Room implements IRoom{
     public Vector<Contact> contactVector;
     public Vector<Message> messageVector;
     private String name;
+    public boolean isGroupChat;
 
     public Room() {
         contactVector=new Vector<Contact>();

@@ -48,7 +48,7 @@ public class conversation extends javax.swing.JFrame {
     private  Room room;
     private User user;
     chatCui gui;
-
+    public FriendList friendList;
     public void setRoom(Room room) {
         this.room = room;
         name.setText(room.contactVector.get(1).getName());
@@ -68,13 +68,14 @@ public class conversation extends javax.swing.JFrame {
         return roomId;
     }
     
-    public conversation(chatCui gui) {
+    public conversation(chatCui gui,Room room) {
         //super(parent, modal);
         initComponents();
         this.user=gui.user;
-        
+        this.room=room;
         setSize(700, 700);
         this.gui = gui;
+        friendList = new FriendList(gui, user, this);
     }
 
     
@@ -107,7 +108,7 @@ public class conversation extends javax.swing.JFrame {
         fontChooserComboBox = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(25, 173, 250));
 
         jPanel2.setBackground(new java.awt.Color(25, 173, 250));
@@ -187,6 +188,7 @@ public class conversation extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(191, 225, 252));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(0, 170, 240));
@@ -237,7 +239,7 @@ public class conversation extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(178, Short.MAX_VALUE))
+                        .addContainerGap(167, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -417,7 +419,7 @@ public class conversation extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new FriendList(gui,gui.user,this).setVisible(true);
+        friendList.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

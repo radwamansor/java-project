@@ -28,7 +28,7 @@ public class FriendList extends javax.swing.JFrame {
     IClientInputHandler handler;
     Vector<GroupContactPannel> contacts = new Vector<>();
     JList<JLabel> contactsPanel = new JList<>();
-    ImageIcon stateColor[] = {new ImageIcon(""), new ImageIcon(""), new ImageIcon("src\\pkg1\\f.png")};
+    ImageIcon stateColor [] = {new ImageIcon(""), new ImageIcon(""), new ImageIcon(getClass().getResource("/pkg1/f.png"))};
     public FriendList( chatCui window, User user,conversation conv) {
         this.conv = conv;
         this.window = window;
@@ -37,14 +37,15 @@ public class FriendList extends javax.swing.JFrame {
         contactsPanel.setLayout(new BoxLayout(contactsPanel, BoxLayout.Y_AXIS));
         listContainer.add(contactsPanel, "contacts");
         for (int i = 0; i < user.userContacts.size(); i++) {
+            if(!conv.getRoom().contactVector.contains(user.userContacts.get(i))){
             GroupContactPannel cont = new GroupContactPannel(window,conv,user.userContacts.get(i));
             cont.name.setText(user.userContacts.get(i).getName());
             cont.status.setText(user.userContacts.get(i).getStatus());
             ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
 //            cont.img.setIcon(icon);
-            cont.state.setIcon(stateColor[user.userContacts.get(i).getState()]);
+//            cont.state.setIcon(stateColor[user.userContacts.get(i).getState()]);
             contactsPanel.add(cont);
-           
+            }
 
         }
     }
@@ -61,7 +62,12 @@ public class FriendList extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listContainer = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         listContainer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255)));
         listContainer.setLayout(new java.awt.CardLayout());
@@ -90,6 +96,11 @@ public class FriendList extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_formMouseClicked
 
     /**
      * @param args the command line arguments
