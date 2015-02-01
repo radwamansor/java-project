@@ -30,11 +30,11 @@ public class signInPanel extends javax.swing.JPanel {
      */
     public signInPanel(chatCui gui,ClientInputHandler cih) {
         initComponents();
-        imagePanel panel = new imagePanel(new ImageIcon("src\\login\\bg.jpg").getImage());
+        imagePanel panel = new imagePanel(new ImageIcon(getClass().getResource("/login/bg.jpg")).getImage());
         this.gui=gui;
         this.handler=cih;
 
-         ImageIcon i =new ImageIcon("src\\login\\skype.png");
+         ImageIcon i =new ImageIcon(getClass().getResource("/login/bg.jpg"));
         jLabel1.setIcon(i);
 
 

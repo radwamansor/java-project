@@ -67,7 +67,7 @@ public class messenger extends javax.swing.JPanel {
     Vector<message> messages = new Vector<>();*/
     public Hashtable<String,ContactPanel> contacts=new Hashtable<String, ContactPanel>();
     public Hashtable<String,Contact> userContacts=new Hashtable<String, Contact>();
-    public ImageIcon stateColor[] = {new ImageIcon("src\\pkg1\\on.png"), new ImageIcon("src\\pkg1\\f.png"), new ImageIcon("src\\pkg1\\3.png"),new ImageIcon("src\\pkg1\\Button_Blue.png")};
+    public ImageIcon stateColor[] = {new ImageIcon(getClass().getResource("/pkg1/on.png")), new ImageIcon(getClass().getResource("/pkg1/f.png")), new ImageIcon(getClass().getResource("/pkg1/3.png")),new ImageIcon(getClass().getResource("/pkg1/Button_Blue.png"))};
     public JList<JLabel> contactsPanel = new JList<>();
     public JList<JLabel> messagesPanel = new JList<>();
     public JList<JLabel> requestsPanel = new JList<>();
@@ -152,9 +152,9 @@ public class messenger extends javax.swing.JPanel {
         //handler=new ClientInputHandler();
         //this part take its values from user object sent in the constructor
         
-        jButton3.setIcon(new ImageIcon("src\\pkg1\\conn.png"));
-        jButton4.setIcon(new ImageIcon("src\\pkg1\\msg1.png"));
-        jButton5.setIcon(new ImageIcon("src\\pkg1\\req.png"));
+        jButton3.setIcon(new ImageIcon(getClass().getResource("/pkg1/conn.png")));
+        jButton4.setIcon(new ImageIcon(getClass().getResource("/pkg1/msg1.png")));
+        jButton5.setIcon(new ImageIcon(getClass().getResource("/pkg1/req.png")));
 
         //this.room = room;
         this.window = window;

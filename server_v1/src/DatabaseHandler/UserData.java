@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -125,7 +126,7 @@ public class UserData {
 
             
             }
-            PreparedStatement pst2 = con.prepareStatement("select * from User_Request_Table where receiver_Email=?");
+            PreparedStatement pst2 = con.prepareStatement("select * from user_request_table where receiver_Email=?");
             pst2.setString(1, mail);
             ResultSet rs2=pst2.executeQuery();
             System.out.println("ay7aga");
@@ -146,7 +147,7 @@ public class UserData {
                      
                 }
             }
-            PreparedStatement pst4 = con.prepareStatement("select * from User_list_Table where user_Email=?");
+            PreparedStatement pst4 = con.prepareStatement("select * from user_list_table where user_Email=?");
             pst4.setString(1, mail);
             ResultSet rs5=pst4.executeQuery();
             while(rs5.next()){
@@ -200,7 +201,7 @@ public class UserData {
         System.out.println("database insert user");
         try {
             System.out.println("inserted");
-            String insertString = new String("INSERT INTO User_Request_Table (user_Email,receiver_Email) VALUES(?,?) ");
+            String insertString = new String("INSERT INTO user_request_table (user_Email,receiver_Email) VALUES(?,?) ");
             PreparedStatement pst = con.prepareStatement(insertString);
             //pst.setInt(1, id);
             pst.setString(1, user);
@@ -273,7 +274,7 @@ public class UserData {
             user.setUserPassword(rs.getString("password"));
             user.setUserGender(rs.getString("gender"));
             user.setUserStatus(rs.getString("status"));
-            File image = new File("D:\\java.gif");
+            File image = new File(getClass().getResource("/pkg1/m.jpg").toURI());
             FileOutputStream fos;
             try {
                 fos = new FileOutputStream(image);
@@ -309,16 +310,18 @@ public class UserData {
                 Contact cont=new Contact(rs1.getString("user_email"),rs1.getString("user_name") , rs1.getString("user_status"), null, 0);
                 user.userRequests.put(cont.getEmail(),cont);
             }
-            pst = con.prepareStatement("select reciever_email from User_list_table where user_Email='"+mail+"'");
+            pst = con.prepareStatement("select reciever_email from user_list_table where user_Email='"+mail+"'");
             rs=pst.executeQuery();
             while(rs.next()){
-                ResultSet rs1=con.createStatement().executeQuery("select * from user_table where user_Email='"+rs.getString("reciever_email")+"'");
+                ResultSet rs1=con.createStatement().executeQuery("select * from User_Table where user_Email='"+rs.getString("reciever_email")+"'");
                 Contact cont=new Contact(rs1.getString("user_email"),rs1.getString("user_name") , rs1.getString("user_status"), null, 0);
                 user.userContacts.add(cont);
             }
             //add also offline messages
             
         } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
@@ -342,7 +345,7 @@ public class UserData {
             connect();
             
             int len_file = (int) userImage.available();
-            java.sql.PreparedStatement stmt1 = con.prepareStatement("update user_table set user_Image=? Where user_Email=?");
+            java.sql.PreparedStatement stmt1 = con.prepareStatement("update User_Table set user_Image=? Where user_Email=?");
             stmt1.setString(2,user_Email);
             stmt1.setBlob(1, userImage, len_file);
             
@@ -363,7 +366,7 @@ public void update_user_status(String user_Email,String status){
 
         try {
             connect();
-            java.sql.PreparedStatement stmt1 = con.prepareStatement("update user_table set status=? Where user_Email=?)");
+            java.sql.PreparedStatement stmt1 = con.prepareStatement("update User_Table set status=? Where user_Email=?)");
             
             stmt1.setString(1, status);
             stmt1.executeUpdate();
