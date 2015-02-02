@@ -149,6 +149,9 @@ public class messenger extends javax.swing.JPanel {
     public messenger( chatCui window, User user) {
         initComponents();
         this.user = user;
+        Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/add.jpg")).getScaledInstance(34, 25, Image.SCALE_SMOOTH);
+        ImageIcon icon=new ImageIcon(img);
+        jButton1.setIcon(icon);
         //handler=new ClientInputHandler();
         //this part take its values from user object sent in the constructor
         
@@ -195,15 +198,25 @@ public class messenger extends javax.swing.JPanel {
         state = new javax.swing.JComboBox();
         status = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(153, 204, 255));
+        setBackground(new java.awt.Color(25, 173, 250));
         setAlignmentX(0.0F);
         setAlignmentY(0.0F);
         setMaximumSize(new java.awt.Dimension(32767, 10));
         setPreferredSize(new java.awt.Dimension(285, 10));
 
-        name.setText("jLabel1");
+        name.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        name.setForeground(new java.awt.Color(255, 255, 255));
+        name.setText("Name");
 
-        contactMail.setText("jTextField1");
+        contactMail.setBackground(new java.awt.Color(191, 225, 252));
+        contactMail.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        contactMail.setForeground(new java.awt.Color(0, 170, 240));
+        contactMail.setText("Add Friend");
+        contactMail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                contactMailFocusLost(evt);
+            }
+        });
         contactMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contactMailActionPerformed(evt);
@@ -214,7 +227,6 @@ public class messenger extends javax.swing.JPanel {
         listContainer.setLayout(new java.awt.CardLayout());
         jScrollPane2.setViewportView(listContainer);
 
-        jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -273,7 +285,10 @@ public class messenger extends javax.swing.JPanel {
             }
         });
 
-        status.setText("jTextField1");
+        status.setBackground(new java.awt.Color(191, 225, 252));
+        status.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        status.setForeground(new java.awt.Color(0, 170, 240));
+        status.setText("Status");
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
@@ -307,8 +322,8 @@ public class messenger extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))))))
+                                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,6 +425,17 @@ public class messenger extends javax.swing.JPanel {
     private void imgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_imgMouseEntered
+
+    private void contactMailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactMailFocusLost
+        String str = contactMail.getText();
+        if (str.equals("")) {
+            contactMail.setText("Add Friend");
+            contactMail.setForeground(java.awt.Color.getHSBColor(0, 170, 240));
+        } else {
+            contactMail.setText(str);
+            contactMail.setForeground(java.awt.Color.gray);
+        }
+    }//GEN-LAST:event_contactMailFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contactMail;

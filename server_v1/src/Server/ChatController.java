@@ -136,6 +136,7 @@ public class ChatController implements IChatController {
     @Override
     public void addContact(User user, Contact contact) {
         boolean flag = userData.validateMail(contact.getEmail());
+        
        // boolean flag1=userData.selectFriend(user, contact.getEmail());
         // System.out.println(flag1);
        /* if(flag1==true){
@@ -148,7 +149,7 @@ public class ChatController implements IChatController {
          Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
          }
          }*/
-        if (flag) {
+        if (flag && user.getUserEmail().equals(contact.getEmail())==false ) {
             try {
 
                 boolean send = userData.addContact(user.getUserEmail(), contact.getEmail());
@@ -173,12 +174,22 @@ public class ChatController implements IChatController {
             }
 
         } else {
-            try {
-                chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
-                chatModel.setJoptionPaneMassage("E-Mail Not Found");
-                onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
-            } catch (RemoteException ex) {
-                Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+            if(flag==false){
+                try {
+                    chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
+                    chatModel.setJoptionPaneMassage("E-Mail Not Found");
+                    onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else {
+                try {
+                    chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
+                    chatModel.setJoptionPaneMassage("You May send Request to Yourself:)");
+                    onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         }
