@@ -28,7 +28,7 @@ public class signUpPanel extends javax.swing.JPanel {
 
     public signUpPanel(chatCui gui, ClientInputHandler cih) {
         initComponents();
-        ImageIcon i = new ImageIcon("src\\pkg1\\skype.png");
+        ImageIcon i =new ImageIcon(getClass().getResource("/login/skype.png"));
         jLabel1.setIcon(i);
         this.gui = gui;
         try {
@@ -64,6 +64,8 @@ public class signUpPanel extends javax.swing.JPanel {
         jPasswordField2 = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+
+        setBackground(new java.awt.Color(25, 173, 250));
 
         jLabel1.setBackground(new java.awt.Color(21, 160, 250));
         jLabel1.setText("jLabel1");
@@ -193,9 +195,6 @@ public class signUpPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -215,8 +214,11 @@ public class signUpPanel extends javax.swing.JPanel {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
