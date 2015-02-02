@@ -95,7 +95,7 @@ public class UserData {
              System.out.println(rs.getString(2));
              }*/
         } catch (SQLException ex) {
-            // ex.printStackTrace();
+            ex.printStackTrace();
             flag = false;
         }
         return flag;

@@ -7,6 +7,7 @@
 package pkg1;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import model.User;
@@ -86,6 +87,11 @@ public class signUpPanel extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Sign Up");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -374,6 +380,50 @@ public class signUpPanel extends javax.swing.JPanel {
             jPasswordField2.setForeground(java.awt.Color.gray);
         }
     }//GEN-LAST:event_jPasswordField2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String uName = new String(fn_txt.getText()+ln_txt.getText());
+        String p1 = new String(jPasswordField1.getPassword());
+        String p2 = new String(jPasswordField2.getPassword());
+        String em1 = new String(email_txt.getText());
+        String em2 = new String(remail_txt.getText());
+        
+        boolean pf=false;
+        boolean emf =false;
+        boolean unf=false;
+        
+        if(!p1.equals(p2))
+            JOptionPane.showMessageDialog(null, "different password");
+        else pf=true;
+        if(!em1.equals(em2))
+            JOptionPane.showMessageDialog(null, "different Email");
+        else emf=true;
+        if(emf) {
+            if(!u.setUserEmail(em2)) {
+                emf = false;
+                JOptionPane.showMessageDialog(null, "bad Email format");
+            }
+        }
+        if(pf){
+            if(!u.setUserPassword(p1)){
+                JOptionPane.showMessageDialog(null, "bad Password format");
+            }
+        }
+        if(u.setUserName(uName))
+            unf = true;
+        else JOptionPane.showMessageDialog(null, "bad User Name format");
+
+        if(pf && emf && unf){
+            System.out.println(uName);
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(em1);
+        System.out.println(em2);
+        System.out.println(uName);
+        cih.signUp(u);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

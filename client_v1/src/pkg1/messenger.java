@@ -85,7 +85,7 @@ public class messenger extends javax.swing.JPanel {
         JToolTip tip=new JToolTip();
         tip.setToolTipText("change Profile pic..");
         img.setToolTipText("change Your Photo");
-            ImageIcon icon =new ImageIcon(user.getUserImage());
+            ImageIcon icon =new ImageIcon(getClass().getResource("/pkg1/m.jpg"));
             System.out.println("image icon"+icon.getIconHeight());
             img.setIcon(icon);
         

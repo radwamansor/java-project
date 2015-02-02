@@ -78,7 +78,7 @@ public class ClientInputHandler implements IClientInputHandler {
         } catch (RemoteException ex) {
             Logger.getLogger(ClientInputHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        signIn(user);
     }
 
     @Override
