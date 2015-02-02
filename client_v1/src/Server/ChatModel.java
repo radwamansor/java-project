@@ -32,6 +32,15 @@ public class ChatModel implements IChatModel {
     Room room;
     byte[] bs;
     FileInputStream img;
+    String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public void setImg(FileInputStream img) {

@@ -101,10 +101,46 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
 
             case ModelType.RECICVE_FILE:
                 String msg = chatModel.getJoptionPaneMassage();
+                String userName=chatModel.getUser().getUserName();
                 byte[] bs = chatModel.getBs();
+                String name=chatModel.getFileName();
+                
                 System.out.println("recive file ");
-                //  JOptionPane.showMessageDialog(null,new String(msg));
+                
                 java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                Object[] options = { "OK", "CANCEL" };
+                int selectedOption=JOptionPane.showOptionDialog(null, "Do You Want To Save File Received From "+ userName, "Save File !", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, options, options[0]);
+                if(selectedOption ==JOptionPane.YES_OPTION){
+                      FileOutputStream fos;
+                 try {
+                     fos = new FileOutputStream("D:/"+name);
+                     fos.write(bs);
+                     fos.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                     Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                else {
+                    
+                }
+                    
+                
+
+
+                //JOptionPane.showMessageDialog(null, new String(msg));
+            }
+        });
+          
+               
+                    
+               /* java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  JFileChooser f = new JFileChooser();
                 if (f.showSaveDialog(gui) == JFileChooser.APPROVE_OPTION) {
@@ -120,7 +156,7 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
             }
                 }
             }
-        });
+        });*/
                
             break;
                 

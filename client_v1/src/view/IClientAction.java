@@ -58,6 +58,10 @@ public interface IClientAction extends Serializable {
     public void setMessage(Message message);
 
     public void setRoom(Room room);
+    
+     public String getFilename();
+
+    public void setFilename(String filename);
 
 
 }

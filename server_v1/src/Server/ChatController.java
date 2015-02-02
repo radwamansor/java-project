@@ -68,7 +68,7 @@ public class ChatController implements IChatController {
     }
 
     @Override
-    public void sendFile(Room room, byte[] bs) {
+    public void sendFile(Room room, byte[] bs,String filename,User user) {
 
         Vector<Contact> conts = room.contactVector;
 
@@ -77,7 +77,9 @@ public class ChatController implements IChatController {
                 IChatModel model = new ChatModel();
                 model.setServiceNumber(ModelType.RECICVE_FILE);
                 model.setBs(bs);
+                model.setFileName(filename);
                 model.setRoom(room);
+                model.setUser(user);
                 onlineUsers.get(conts.get(i).getEmail()).changeModel(model);
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);

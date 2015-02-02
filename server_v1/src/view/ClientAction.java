@@ -28,6 +28,16 @@ public class ClientAction implements IClientAction {
     private Room room;
     private byte[] bs;
     private FileInputStream image;
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+  
 
    
     @Override

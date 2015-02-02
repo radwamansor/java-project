@@ -46,5 +46,10 @@ public interface IChatModel extends Serializable{
     public FileInputStream getImg();
     public void setImg(FileInputStream img); 
     
+     public String getFileName();
+
+    public void setFileName(String fileName);
+    
+    
     
 }

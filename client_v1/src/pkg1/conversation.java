@@ -378,6 +378,7 @@ public class conversation extends javax.swing.JFrame {
         JFileChooser f = new JFileChooser();
         if (f.showOpenDialog(conversation.this) == JFileChooser.APPROVE_OPTION) {
             String path = f.getSelectedFile().getPath();
+            String name=f.getSelectedFile().getName();
             try {
                 FileInputStream fis = new FileInputStream(path);
                 int size = fis.available();
@@ -385,7 +386,7 @@ public class conversation extends javax.swing.JFrame {
                 fis.read(b);
                 // Message m=new Message(roomId, null, null, null, true);
                 IClientInputHandler cih = new ClientInputHandler();
-                cih.sendFile(room,b);
+                cih.sendFile(room,b,name,user);
                 // jTextArea1.setText(new String(b));
                 fis.close();
 
