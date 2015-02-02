@@ -9,6 +9,8 @@ package pkg1;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.BOLD;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,9 +20,12 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.spi.ObjectFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -376,6 +381,9 @@ public class conversation extends javax.swing.JFrame {
         ImageIcon i = new ImageIcon("src/pkg1/file.png");
       
         JFileChooser f = new JFileChooser();
+        MyFileView fileView=new MyFileView();
+        f.setFileView(fileView);
+        
         if (f.showOpenDialog(conversation.this) == JFileChooser.APPROVE_OPTION) {
             String path = f.getSelectedFile().getPath();
             String name=f.getSelectedFile().getName();
@@ -444,3 +452,40 @@ public class conversation extends javax.swing.JFrame {
     public javax.swing.JTextArea text2;
     // End of variables declaration//GEN-END:variables
 }
+
+class MyJpgFilter extends FileFilter{
+    public boolean accept(File f){
+        if((f.getName().toLowerCase().endsWith(".jpg"))||(f.isDirectory())){
+            return true;
+        }
+        else 
+            return false;
+    }
+    public String getDescription(){
+        return "JPG Files (.jpg)";
+    }
+}
+
+class MyFileView extends FileView{
+    public Icon getIcon(File f){
+        if(f.isDirectory()){
+            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/dir.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon=new ImageIcon(img);
+            return icon;
+        }
+        if(f.isFile()){
+            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/file.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon=new ImageIcon(img);
+            return icon;
+        }
+        if((f.getName().toLowerCase().endsWith(".jpg"))){
+            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/image.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon=new ImageIcon(img);
+            return icon;
+        }
+        else 
+            return null;
+    }
+   
+}
+

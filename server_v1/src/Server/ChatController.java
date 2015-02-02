@@ -369,7 +369,7 @@ public class ChatController implements IChatController {
                 }
             } else {
                 try {
-                    chatModel.setJoptionPaneMassage("wrong password");
+                    chatModel.setJoptionPaneMassage("Invalid password");
                     chatModel.setServiceNumber(ModelType.SERROR_MESSAGE);
                     clientListener.changeModel(chatModel);
                 } catch (RemoteException ex) {
@@ -378,7 +378,7 @@ public class ChatController implements IChatController {
             }
         } else {
             try {
-                chatModel.setJoptionPaneMassage("invalid Email");
+                chatModel.setJoptionPaneMassage("Invalid Email");
                 chatModel.setServiceNumber(ModelType.SERROR_MESSAGE);
                 clientListener.changeModel(chatModel);
             } catch (RemoteException ex) {
