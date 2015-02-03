@@ -169,7 +169,20 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                 break;
 
             case ModelType.REQUEST_SEND:
-                java.awt.EventQueue.invokeLater(new Runnable() {
+                java.awt.EventQueue.invokeLater( new Runnable() {
+
+            @Override
+            public void run() {
+               JOptionPane.showMessageDialog(null,chatModel.getJoptionPaneMassage());
+            }
+        });
+                    Contact c1 = chatModel.getContact();
+                    request r1 = new request();
+                    ImageIcon ico1 = new ImageIcon(c1.getPhoto());
+                    r1.img.setIcon(ico1);
+                    r1.name.setText(c1.getName());
+                    gui.mess.requestsPanel.add(r1);
+                    r1.accept.addActionListener(new ActionListener() {
 
                     @Override
                     public void run() {
