@@ -329,7 +329,7 @@ public class conversation extends javax.swing.JFrame {
     }//GEN-LAST:event_saveMessageActionPerformed
 
     private void attach1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attach1ActionPerformed
-        ImageIcon i = new ImageIcon("src/pkg1/file.png");
+        ImageIcon i = new ImageIcon("/pkg1/file.png");
 
         JFileChooser f = new JFileChooser();
         MyFileView fileView = new MyFileView();
