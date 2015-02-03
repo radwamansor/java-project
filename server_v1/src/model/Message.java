@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.swing.text.SimpleAttributeSet;
 
 /**
  *
@@ -18,6 +19,15 @@ public class Message implements Serializable{
     private String sender;
     private String txt;
     private boolean seen;
+    private SimpleAttributeSet keyWord;
+
+    public void setKeyWord(SimpleAttributeSet keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public SimpleAttributeSet getKeyWord() {
+        return keyWord;
+    }
     
     public Message(String room,Timestamp timestamp,String sender,String txt,boolean seen){
         this.timestamp =timestamp;
