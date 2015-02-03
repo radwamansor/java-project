@@ -27,7 +27,7 @@ public class ClientAction implements IClientAction {
     private IClientListener clientModel;
     private Room room;
     private byte[] bs;
-    private FileInputStream image;
+    private byte[] image;
     private String filename;
 
     public String getFilename() {
@@ -37,17 +37,20 @@ public class ClientAction implements IClientAction {
     public void setFilename(String filename) {
         this.filename = filename;
     }
-  
 
-   
-    @Override
-    public FileInputStream getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(FileInputStream image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
+  
+
+   
+   
+    
+    
 
     public void setContIdx(int idx) {
         ContIdx=idx;

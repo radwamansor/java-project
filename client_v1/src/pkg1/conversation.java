@@ -475,10 +475,9 @@ public class conversation extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
-class MyJpgFilter extends FileFilter {
-
-    public boolean accept(File f) {
-        if ((f.getName().toLowerCase().endsWith(".jpg")) || (f.isDirectory())) {
+class MyJpgFilter extends FileFilter{
+    public boolean accept(File f){
+        if((f.getName().toLowerCase().endsWith(".jpg"))||(f.isDirectory()) || (f.getName().toLowerCase().endsWith(".png"))){
             return true;
         } else {
             return false;

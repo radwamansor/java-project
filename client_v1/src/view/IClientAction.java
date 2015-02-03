@@ -44,11 +44,9 @@ public interface IClientAction extends Serializable {
 
    public int getContIdx();
 
-    
-     public FileInputStream getImage();
+    public byte[] getImage();
 
-    public void setImage(FileInputStream image);
-
+    public void setImage(byte[] image);
     public void setUser(User user);
 
     public void setServiceNum(int SIGN_UP);

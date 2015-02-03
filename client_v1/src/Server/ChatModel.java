@@ -31,7 +31,7 @@ public class ChatModel implements IChatModel {
     Contact contact;
     Room room;
     byte[] bs;
-    FileInputStream img;
+    byte[] img;
     String fileName;
 
     public String getFileName() {
@@ -42,15 +42,15 @@ public class ChatModel implements IChatModel {
         this.fileName = fileName;
     }
 
-    @Override
-    public void setImg(FileInputStream img) {
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
         this.img = img;
     }
 
-    @Override
-    public FileInputStream getImg() {
-        return img;
-    }
+    
 
     
     @Override

@@ -269,13 +269,15 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                  gui.parentPanel.add("messenger", gui.mess);
                  card4.show(gui.parentPanel, "messenger");*/
                 break;
-
-            case ModelType.PHOTO_CHANGED:
+                 
+                case ModelType.PHOTO_CHANGED:
+                    
                 gui.setUser(chatModel.getUser());
                 CardLayout card5 = (CardLayout) gui.parentPanel.getLayout();
                 gui.mess = new messenger(gui, chatModel.getUser());
                 gui.parentPanel.add("messenger", gui.mess);
                 card5.show(gui.parentPanel, "messenger");
+                
                 break;
             case ModelType.REJECTED:
                 gui.user.userRequests.remove(chatModel.getContact().getEmail());

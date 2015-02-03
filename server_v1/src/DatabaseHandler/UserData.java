@@ -8,6 +8,7 @@ package DatabaseHandler;
 import Server.ChatController;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -338,29 +339,24 @@ public class UserData {
 //bishoy
 
 //Aliaa
-    public void updateImage(String user_Email,FileInputStream userImage){
+    public void updateImage(String user_Email,byte[] userImage){
     
+        
         try {
             //fc.setFileFilter(new JPEGImageFileFilter());-->not
             connect();
-            
-            int len_file = (int) userImage.available();
+            InputStream myInputStream = new ByteArrayInputStream(userImage); 
+            int len_file = (int) userImage.length;
             java.sql.PreparedStatement stmt1 = con.prepareStatement("update User_Table set user_Image=? Where user_Email=?");
             stmt1.setString(2,user_Email);
-            stmt1.setBlob(1, userImage, len_file);
+            stmt1.setBlob(1, myInputStream, len_file);
             
             stmt1.executeUpdate();
-        } catch (FileNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                userImage.close();
-            } catch (IOException ex) {
-                Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
+        
+       
         }
 public void update_user_status(String user_Email,String status){
 

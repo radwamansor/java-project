@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -37,6 +39,8 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
 import model.Contact;
 import model.Room;
 import model.User;
@@ -78,16 +82,21 @@ public class messenger extends javax.swing.JPanel {
 
     public void displayUserInfo(User user) {
         
-      /*  img.setIcon(getimage());
+        /*img.setIcon(getimage());
         ImageIcon mm=getimage();*/
+        
        // System.out.println("image icon "+mm.getIconHeight());
         //mm.paintIcon(gui,new , w, w);
-        JToolTip tip=new JToolTip();
-        tip.setToolTipText("change Profile pic..");
+//        JToolTip tip=new JToolTip();
+//        tip.setToolTipText("change Profile pic..");
         img.setToolTipText("change Your Photo");
+        //Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/dir.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        /*    ImageIcon icon=new ImageIcon(img);
             ImageIcon icon =new ImageIcon(getClass().getResource("/pkg1/m.jpg"));
-            System.out.println("image icon"+icon.getIconHeight());
-            img.setIcon(icon);
+            System.out.println("image icon"+icon.getIconHeight());*/
+         ImageIcon icon =new ImageIcon(user.getUserImage());
+         System.out.println("image icon"+icon.getIconHeight());
+         img.setIcon(icon);
         
 
         for (int i = 0; i < user.userContacts.size(); i++) {
@@ -401,19 +410,26 @@ public class messenger extends javax.swing.JPanel {
 
     private void imgMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgMousePressed
          JFileChooser f = new JFileChooser();
+         MyFileView fileView=new MyFileView();
+         MyJpgFilter fileFilter=new MyJpgFilter();
+         f.setFileFilter(fileFilter);
+         f.setFileView(fileView);
+         
         if (f.showOpenDialog(messenger.this) == JFileChooser.APPROVE_OPTION) {
            // f.setFileFilter(new JPEGImageFileFilter());
             String path = f.getSelectedFile().getPath();
-            IClientInputHandler cih=new ClientInputHandler();
-            cih.changePhoto(user,path);
-            /*try {
-                FileInputStream fis=new FileInputStream(path);
-                int size=fis.available();
-                byte[] b=new byte[size];
+            String name=f.getSelectedFile().getName();
+           // IClientInputHandler cih=new ClientInputHandler();
+            
+            
+            try {
+                FileInputStream fis = new FileInputStream(path);
+                int size = fis.available();
+                byte[] b = new byte[size];
                 fis.read(b);
                 // Message m=new Message(roomId, null, null, null, true);
-                IClientInputHandler cih=new ClientInputHandler();
-                cih.sendFile(room,b);
+                IClientInputHandler cih = new ClientInputHandler();
+                cih.changePhoto(user,b);
                 // jTextArea1.setText(new String(b));
                 fis.close();
 
@@ -421,8 +437,8 @@ public class messenger extends javax.swing.JPanel {
                 System.out.println("FileNotFound");
             } catch (IOException ex) {
                 Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
-            } */
-        
+            }
+
         
        }
     }//GEN-LAST:event_imgMousePressed

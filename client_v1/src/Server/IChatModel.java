@@ -43,8 +43,9 @@ public interface IChatModel extends Serializable{
     public void setBs(byte[] bs);
     public int getContIdx();
     public void setContIdx(int contIdx);
-    public FileInputStream getImg();
-    public void setImg(FileInputStream img); 
+     public byte[] getImg();
+
+    public void setImg(byte[] img);
     
     public String getFileName();
 
