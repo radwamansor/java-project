@@ -41,7 +41,7 @@ public class FriendList extends javax.swing.JFrame {
             GroupContactPannel cont = new GroupContactPannel(window,conv,user.userContacts.get(i));
             cont.name.setText(user.userContacts.get(i).getName());
             cont.status.setText(user.userContacts.get(i).getStatus());
-            ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
+//            ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
 //            cont.img.setIcon(icon);
 //            cont.state.setIcon(stateColor[user.userContacts.get(i).getState()]);
             contactsPanel.add(cont);

@@ -95,7 +95,7 @@ public class messenger extends javax.swing.JPanel {
             ContactPanel cont = new ContactPanel(window,user.userContacts.get(i));
             cont.name.setText(user.userContacts.get(i).getName());
             cont.status.setText(user.userContacts.get(i).getStatus());
-            ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
+            //ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
             contacts.put(user.userContacts.get(i).getEmail(), cont);
             //cont.img.setIcon(icon);
 //            cont.state.setIcon(stateColor[user.userContacts.get(i).getState()-1]);
@@ -275,11 +275,11 @@ public class messenger extends javax.swing.JPanel {
         img.setToolTipText("change Your Photo");
         img.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         img.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                imgMouseEntered(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 imgMousePressed(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                imgMouseEntered(evt);
             }
         });
 
@@ -304,7 +304,7 @@ public class messenger extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +350,7 @@ public class messenger extends javax.swing.JPanel {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

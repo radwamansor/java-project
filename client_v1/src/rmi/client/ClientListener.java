@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
 import jdk.nashorn.internal.parser.TokenType;
 import model.Contact;
 import model.Room;
@@ -52,6 +53,7 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
 
     @Override
     public void changeModel(IChatModel chatModel) {
+
         switch (chatModel.getServiceNumber()) {
             case ModelType.USER_FOUND:
                 User user = chatModel.getUser();
@@ -75,26 +77,38 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
 
             case ModelType.RECIEVE_MESSAGE:
                 //boolean foundId = false;
-                
-                    
-                     if(!gui.rooms.containsKey(chatModel.getRoom().getRoomId())){
-                         conversation conv=new conversation(gui,chatModel.getRoom());
-                         conv.setRoom(chatModel.getRoom());
-                         conv.setVisible(true);
-                         gui.rooms.put(chatModel.getRoom().getRoomId(), conv);
-                         gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
-                     }else{
-                         gui.rooms.get(chatModel.getRoom().getRoomId()).setVisible(true);
-                         gui.rooms.get(chatModel.getRoom().getRoomId()).setRoom(chatModel.getRoom());
-                         gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
-                         System.out.println("room id  :  "+chatModel.getRoom().getRoomId());
-                   
+                int docLength = gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.getLength();
+                if (!gui.rooms.containsKey(chatModel.getRoom().getRoomId())) {
+                    try {
+                        conversation conv = new conversation(gui, chatModel.getRoom());
+                        conv.setRoom(chatModel.getRoom());
+                        conv.setVisible(true);
+                        gui.rooms.put(chatModel.getRoom().getRoomId(), conv);
+                        //  gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
+                        gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.insertString(docLength, "\n" + chatModel.getMsg().getSender() + ":" + chatModel.getMsg().getTxt(),
+                                gui.rooms.get(chatModel.getRoom().getRoomId()).keyWord);
+                    } catch (BadLocationException ex) {
+                        Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        gui.rooms.get(chatModel.getRoom().getRoomId()).setVisible(true);
+                        gui.rooms.get(chatModel.getRoom().getRoomId()).setRoom(chatModel.getRoom());
+                //gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
+                        //  gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
+                        gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.insertString(docLength, "\n" + chatModel.getMsg().getSender() + ":" + chatModel.getMsg().getTxt(),
+                                gui.rooms.get(chatModel.getRoom().getRoomId()).keyWord);
+
+                        System.out.println("room id  :  " + chatModel.getRoom().getRoomId());
+                    } catch (BadLocationException ex) {
+                        Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                 }
 
                 break;
             case ModelType.RECIEVE_ROOM_ID:
-                conversation conv = new conversation(gui,chatModel.getRoom());
+                conversation conv = new conversation(gui, chatModel.getRoom());
                 conv.setRoomId(chatModel.getRoom().getRoomId());
                 conv.setRoom(chatModel.getRoom());
                 //gui.room.rooms_tabs.insertTab(chatModel.getRoom().getName(), null, conv, null, gui.room.rooms_tabs.getTabCount());
@@ -102,113 +116,104 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
 
             case ModelType.RECICVE_FILE:
                 String msg = chatModel.getJoptionPaneMassage();
-                String userName=chatModel.getUser().getUserName();
+                String userName = chatModel.getUser().getUserName();
                 byte[] bs = chatModel.getBs();
-                String name=chatModel.getFileName();
-                
+                String name = chatModel.getFileName();
+
                 System.out.println("recive file ");
-                
+
                 java.awt.EventQueue.invokeLater(new Runnable() {
 
-            @Override
-            public void run() {
-                Object[] options = { "OK", "CANCEL" };
-                int selectedOption=JOptionPane.showOptionDialog(null, "Do You Want To Save File Received From "+ userName, "Save File !", 
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
-                if(selectedOption ==JOptionPane.YES_OPTION){
-                      FileOutputStream fos;
-                 try {
-                     fos = new FileOutputStream("D:/"+name);
-                     fos.write(bs);
-                     fos.close();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                     Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                }
-                else {
-                    
-                }
-                    
-                
-
-
-                //JOptionPane.showMessageDialog(null, new String(msg));
-            }
-        });
-          
-               
-                    
-               /* java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                 JFileChooser f = new JFileChooser();
-                if (f.showSaveDialog(gui) == JFileChooser.APPROVE_OPTION) {
-                    String path = f.getSelectedFile().getPath();
-                try {
-                    FileOutputStream fos=new FileOutputStream(path);
-                    fos.write(bs);
-                    fos.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                }
-            }
-        });*/
-               
-            break;
-                
-                
-            case ModelType.REQUEST_SEND:
-                java.awt.EventQueue.invokeLater( new Runnable() {
-
-            @Override
-            public void run() {
-               JOptionPane.showMessageDialog(null,chatModel.getJoptionPaneMassage());
-            }
-        });
-                    Contact c1 = chatModel.getContact();
-                    request r1 = new request();
-                   /* ImageIcon ico1 = new ImageIcon(c1.getPhoto());
-                    r1.img.setIcon(ico1);*/
-                    r1.name.setText(c1.getName());
-                    gui.mess.requestsPanel.add(r1);
-                    r1.accept.addActionListener(new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            gui.cih.acceptContact(gui.user, c1);
+                    @Override
+                    public void run() {
+                        Object[] options = {"OK", "CANCEL"};
+                        int selectedOption = JOptionPane.showOptionDialog(null, "Do You Want To Save File Received From " + userName, "Save File !",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                                null, options, options[0]);
+                        if (selectedOption == JOptionPane.YES_OPTION) {
+                            FileOutputStream fos;
+                            try {
+                                fos = new FileOutputStream("D:/" + name);
+                                fos.write(bs);
+                                fos.close();
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
 
                         }
-                    });
-                
+
+                        //JOptionPane.showMessageDialog(null, new String(msg));
+                    }
+                });
+
+                /* java.awt.EventQueue.invokeLater(new Runnable() {
+                 public void run() {
+                 JFileChooser f = new JFileChooser();
+                 if (f.showSaveDialog(gui) == JFileChooser.APPROVE_OPTION) {
+                 String path = f.getSelectedFile().getPath();
+                 try {
+                 FileOutputStream fos=new FileOutputStream(path);
+                 fos.write(bs);
+                 fos.close();
+                 } catch (FileNotFoundException ex) {
+                 Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                 } catch (IOException ex) {
+                 Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+                 }
+                 }
+                 });*/
+                break;
+
+            case ModelType.REQUEST_SEND:
+                java.awt.EventQueue.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null, chatModel.getJoptionPaneMassage());
+                    }
+                });
+                Contact c1 = chatModel.getContact();
+                request r1 = new request();
+                /* ImageIcon ico1 = new ImageIcon(c1.getPhoto());
+                 r1.img.setIcon(ico1);*/
+                r1.name.setText(c1.getName());
+                gui.mess.requestsPanel.add(r1);
+                r1.accept.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        gui.cih.acceptContact(gui.user, c1);
+
+                    }
+                });
 
                 gui.mess.requestsPanel.repaint();
-                
-                break;
-                
-            case ModelType.REQUEST_NOT_SEND:
-                String errorMsg=chatModel.getJoptionPaneMassage();
-                java.awt.EventQueue.invokeLater( new Runnable() {
 
-            @Override
-            public void run() {
-               JOptionPane.showMessageDialog(null,new String(errorMsg));
-            }
-        });
+                break;
+
+            case ModelType.REQUEST_NOT_SEND:
+                String errorMsg = chatModel.getJoptionPaneMassage();
+                java.awt.EventQueue.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null, new String(errorMsg));
+                    }
+                });
                 gui.setUser(chatModel.getUser());
                 CardLayout card2 = (CardLayout) gui.parentPanel.getLayout();
-                gui.mess = new messenger( gui, chatModel.getUser());
+                gui.mess = new messenger(gui, chatModel.getUser());
                 gui.parentPanel.add("messenger", gui.mess);
                 card2.show(gui.parentPanel, "messenger");
                 break;
             case ModelType.ACCEPT_FRIEND:
                 gui.user.userRequests.remove(chatModel.getContact().getEmail());
                 gui.user.userContacts.add(chatModel.getContact());
-                
+
                 gui.mess.requestsPanel.removeAll();
                 gui.mess.requestsPanel.repaint();
                 Set<String> entrySet = gui.user.userRequests.keySet();
@@ -250,25 +255,25 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                 cont.name.setText(chatModel.getContact().getName());
                 cont.status.setText(chatModel.getContact().getStatus());
                 break;
-                case ModelType.PHOTO_NOT_CHANGED:
-                java.awt.EventQueue.invokeLater( new Runnable() {
+            case ModelType.PHOTO_NOT_CHANGED:
+                java.awt.EventQueue.invokeLater(new Runnable() {
 
-            @Override
-            public void run() {
-               JOptionPane.showMessageDialog(null,chatModel.getJoptionPaneMassage());
-            }
-        });
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null, chatModel.getJoptionPaneMassage());
+                    }
+                });
                 /*gui.setUser(chatModel.getUser());
-                CardLayout card4 = (CardLayout) gui.parentPanel.getLayout();
-                gui.mess = new messenger( gui, chatModel.getUser());
-                gui.parentPanel.add("messenger", gui.mess);
-                card4.show(gui.parentPanel, "messenger");*/
+                 CardLayout card4 = (CardLayout) gui.parentPanel.getLayout();
+                 gui.mess = new messenger( gui, chatModel.getUser());
+                 gui.parentPanel.add("messenger", gui.mess);
+                 card4.show(gui.parentPanel, "messenger");*/
                 break;
-                 
-                case ModelType.PHOTO_CHANGED:
+
+            case ModelType.PHOTO_CHANGED:
                 gui.setUser(chatModel.getUser());
                 CardLayout card5 = (CardLayout) gui.parentPanel.getLayout();
-                gui.mess = new messenger( gui, chatModel.getUser());
+                gui.mess = new messenger(gui, chatModel.getUser());
                 gui.parentPanel.add("messenger", gui.mess);
                 card5.show(gui.parentPanel, "messenger");
                 break;
@@ -307,7 +312,8 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                 cont1.status.setText(chatModel.getContact().getStatus());
                 gui.mess.contacts.put(chatModel.getContact().getEmail(), cont1);
                 java.awt.EventQueue.invokeLater(new Runnable() {
-                    String message=chatModel.getJoptionPaneMassage();
+                    String message = chatModel.getJoptionPaneMassage();
+
                     public void run() {
                         JOptionPane.showMessageDialog(null, new String(message));
                     }
@@ -315,7 +321,8 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                 break;
             case ModelType.RECIEVE_REJECT:
                 java.awt.EventQueue.invokeLater(new Runnable() {
-                    String message=chatModel.getJoptionPaneMassage();
+                    String message = chatModel.getJoptionPaneMassage();
+
                     public void run() {
                         JOptionPane.showMessageDialog(null, new String(message));
                     }
@@ -323,12 +330,10 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                 break;
             case ModelType.CHANGE_STATE:
                 //gui.mess.userContacts.
-                ContactPanel cont2=gui.mess.contacts.get(chatModel.getContact().getEmail());
+                ContactPanel cont2 = gui.mess.contacts.get(chatModel.getContact().getEmail());
                 cont2.state.setIcon(gui.mess.stateColor[chatModel.getContact().getState()]);
 
         }
-        
-        
 
     }
 

@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pkg1;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import static java.awt.Font.BOLD;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,12 +22,24 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.spi.ObjectFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileView;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -49,11 +63,20 @@ public class conversation extends javax.swing.JFrame {
     /**
      * Creates new form conversation
      */
+    //sarah
+    public StyledDocument doc;
+    public StyledDocument doc2;
+    // Define a keyword attribute...sarah
+    public SimpleAttributeSet keyWord = new SimpleAttributeSet();
+    Color colorChooser;
+
+    //sarah
     private String roomId;
-    private  Room room;
+    private Room room;
     private User user;
     chatCui gui;
     public FriendList friendList;
+
     public void setRoom(Room room) {
         this.room = room;
         name.setText(room.contactVector.get(1).getName());
@@ -63,8 +86,6 @@ public class conversation extends javax.swing.JFrame {
         return room;
     }
 
-    
-    
     public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
@@ -72,18 +93,16 @@ public class conversation extends javax.swing.JFrame {
     public String getRoomId() {
         return roomId;
     }
-    
-    public conversation(chatCui gui,Room room) {
+
+    public conversation(chatCui gui, Room room) {
         //super(parent, modal);
         initComponents();
-        this.user=gui.user;
-        this.room=room;
+        this.user = gui.user;
+        this.room = room;
         setSize(700, 700);
         this.gui = gui;
         friendList = new FriendList(gui, user, this);
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,24 +117,22 @@ public class conversation extends javax.swing.JFrame {
         img1 = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        text2 = new javax.swing.JTextArea();
+        mainJpane = new javax.swing.JTextPane();
         send1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        text1 = new javax.swing.JTextArea();
         saveMessage = new javax.swing.JButton();
         attach1 = new javax.swing.JButton();
-        color = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        fontChooserComboBox = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        fontChooserComboBox = new javax.swing.JComboBox();
+        color = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        chatJpane = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(25, 173, 250));
-        setMaximumSize(new java.awt.Dimension(300, 270));
-        setPreferredSize(new java.awt.Dimension(300, 270));
         setResizable(false);
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -128,7 +145,7 @@ public class conversation extends javax.swing.JFrame {
         img1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/Person_1.png"))); // NOI18N
         img1.setText("jLabel1");
         jPanel2.add(img1);
-        img1.setBounds(12, 12, 80, 80);
+        img1.setBounds(10, 10, 80, 80);
 
         name.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         name.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,12 +153,11 @@ public class conversation extends javax.swing.JFrame {
         jPanel2.add(name);
         name.setBounds(104, 17, 165, 24);
 
-        text2.setColumns(20);
-        text2.setRows(5);
-        jScrollPane3.setViewportView(text2);
+        mainJpane.setEditable(false);
+        jScrollPane3.setViewportView(mainJpane);
 
         jPanel2.add(jScrollPane3);
-        jScrollPane3.setBounds(12, 112, 502, 170);
+        jScrollPane3.setBounds(10, 110, 510, 170);
 
         send1.setBackground(new java.awt.Color(25, 173, 250));
         send1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -153,20 +169,13 @@ public class conversation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(send1);
-        send1.setBounds(456, 349, 56, 35);
+        send1.setBounds(460, 360, 60, 35);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(20, 20));
         jPanel3.setMinimumSize(new java.awt.Dimension(20, 20));
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
         jPanel2.add(jPanel3);
         jPanel3.setBounds(520, 296, 166, 0);
-
-        text1.setColumns(20);
-        text1.setRows(5);
-        jScrollPane4.setViewportView(text1);
-
-        jPanel2.add(jScrollPane4);
-        jScrollPane4.setBounds(12, 332, 438, 73);
 
         saveMessage.setBackground(new java.awt.Color(63, 129, 179));
         saveMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -182,7 +191,7 @@ public class conversation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(saveMessage);
-        saveMessage.setBounds(463, 12, 51, 35);
+        saveMessage.setBounds(430, 300, 70, 30);
 
         attach1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/file_1.png"))); // NOI18N
         attach1.setMaximumSize(new java.awt.Dimension(35, 35));
@@ -194,17 +203,7 @@ public class conversation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(attach1);
-        attach1.setBounds(16, 294, 55, 35);
-
-        color.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/colorgrid.gif"))); // NOI18N
-        color.setText("jButton1");
-        color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(color);
-        color.setBounds(77, 294, 51, 35);
+        attach1.setBounds(11, 299, 50, 30);
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(191, 225, 252));
@@ -225,18 +224,6 @@ public class conversation extends javax.swing.JFrame {
         jPanel2.add(jLabel1);
         jLabel1.setBounds(104, 54, 46, 20);
 
-        fontChooserComboBox.setBackground(new java.awt.Color(63, 129, 179));
-        fontChooserComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fontChooserComboBox.setForeground(new java.awt.Color(255, 255, 255));
-        fontChooserComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fonts" }));
-        fontChooserComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fontChooserComboBoxActionPerformed(evt);
-            }
-        });
-        jPanel2.add(fontChooserComboBox);
-        fontChooserComboBox.setBounds(134, 296, 116, 33);
-
         jButton1.setBackground(new java.awt.Color(63, 129, 179));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -247,7 +234,7 @@ public class conversation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton1);
-        jButton1.setBounds(414, 295, 100, 36);
+        jButton1.setBounds(420, 50, 100, 27);
 
         jButton3.setBackground(new java.awt.Color(63, 129, 179));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -259,7 +246,36 @@ public class conversation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton3);
-        jButton3.setBounds(262, 295, 146, 36);
+        jButton3.setBounds(280, 300, 146, 30);
+
+        fontChooserComboBox.setBackground(new java.awt.Color(63, 129, 179));
+        fontChooserComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fontChooserComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        fontChooserComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fonts" }));
+        fontChooserComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fontChooserComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel2.add(fontChooserComboBox);
+        fontChooserComboBox.setBounds(170, 300, 110, 30);
+
+        color.setBackground(new java.awt.Color(63, 129, 179));
+        color.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        color.setForeground(new java.awt.Color(255, 255, 255));
+        color.setText("colors");
+        color.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                colorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(color);
+        color.setBounds(60, 300, 110, 30);
+
+        jScrollPane1.setViewportView(chatJpane);
+
+        jPanel2.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 340, 440, 80);
 
         getContentPane().add(jPanel2, "card2");
 
@@ -267,7 +283,7 @@ public class conversation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void send1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send1ActionPerformed
-        String s = text1.getText();
+        String s = chatJpane.getText();
 
         Message m = new Message(roomId, null, user.getUserName(), s, true);
         IClientInputHandler cih = new ClientInputHandler();
@@ -275,53 +291,53 @@ public class conversation extends javax.swing.JFrame {
     }//GEN-LAST:event_send1ActionPerformed
 
     private void saveMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMessageActionPerformed
-       /* try {
-            // TODO add your handling code here:
-            xmlproject.ObjectFactory factory = new ObjectFactory();
-            ChatType ch = factory.createChatType();
+        /* try {
+         // TODO add your handling code here:
+         xmlproject.ObjectFactory factory = new ObjectFactory();
+         ChatType ch = factory.createChatType();
 
-            ch.setHeader("sent messages");
-            GregorianCalendar c = new GregorianCalendar();
-            Date d = new Date();
-            c.setTime(d);
-            XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-            ch.setDate(date2);
-            //
-            //            for (int i = 0; i < room.messageVector.size(); i++) {
-                //                Message m = room.messageVector.get(i);
-                //                MsgType msg2 = factory.createMsgType();
-                //                msg2.setName(m.getSender());
-                //                msg2.setBody(m.getTxt());
-                //                ch.getMsg().add(msg2);
-                //
-                //            }
-            System.out.println("before xml ...");
-            Message m = new Message(roomId, null, "sarah@aabed", "hello i am sarah aabed 000", true);
-            MsgType msg2 = factory.createMsgType();
-            msg2.setName("sarah");
-            msg2.setBody("btfdes");
-            ch.getMsg().add(msg2);
+         ch.setHeader("sent messages");
+         GregorianCalendar c = new GregorianCalendar();
+         Date d = new Date();
+         c.setTime(d);
+         XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+         ch.setDate(date2);
+         //
+         //            for (int i = 0; i < room.messageVector.size(); i++) {
+         //                Message m = room.messageVector.get(i);
+         //                MsgType msg2 = factory.createMsgType();
+         //                msg2.setName(m.getSender());
+         //                msg2.setBody(m.getTxt());
+         //                ch.getMsg().add(msg2);
+         //
+         //            }
+         System.out.println("before xml ...");
+         Message m = new Message(roomId, null, "sarah@aabed", "hello i am sarah aabed 000", true);
+         MsgType msg2 = factory.createMsgType();
+         msg2.setName("sarah");
+         msg2.setBody("btfdes");
+         ch.getMsg().add(msg2);
 
-            JAXBContext context = JAXBContext.newInstance("xmlproject");
-            JAXBElement<ChatType> element = factory.createMyMsg(ch);
-            Marshaller marsh = context.createMarshaller();
-            marsh.setProperty("jaxb.formatted.output", Boolean.TRUE);
-            marsh.marshal(element, new File("E:\\SARAH\\ITI_Resources\\Java\\Project\\lastVersionProject\\demo1.xml"));
-        } catch (DatatypeConfigurationException | JAXBException ex) {
-            Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+         JAXBContext context = JAXBContext.newInstance("xmlproject");
+         JAXBElement<ChatType> element = factory.createMyMsg(ch);
+         Marshaller marsh = context.createMarshaller();
+         marsh.setProperty("jaxb.formatted.output", Boolean.TRUE);
+         marsh.marshal(element, new File("E:\\SARAH\\ITI_Resources\\Java\\Project\\lastVersionProject\\demo1.xml"));
+         } catch (DatatypeConfigurationException | JAXBException ex) {
+         Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
+         }*/
     }//GEN-LAST:event_saveMessageActionPerformed
 
     private void attach1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attach1ActionPerformed
         ImageIcon i = new ImageIcon("src/pkg1/file.png");
-      
+
         JFileChooser f = new JFileChooser();
-        MyFileView fileView=new MyFileView();
+        MyFileView fileView = new MyFileView();
         f.setFileView(fileView);
-        
+
         if (f.showOpenDialog(conversation.this) == JFileChooser.APPROVE_OPTION) {
             String path = f.getSelectedFile().getPath();
-            String name=f.getSelectedFile().getName();
+            String name = f.getSelectedFile().getName();
             try {
                 FileInputStream fis = new FileInputStream(path);
                 int size = fis.available();
@@ -329,7 +345,7 @@ public class conversation extends javax.swing.JFrame {
                 fis.read(b);
                 // Message m=new Message(roomId, null, null, null, true);
                 IClientInputHandler cih = new ClientInputHandler();
-                cih.sendFile(room,b,name,user);
+                cih.sendFile(room, b, name, user);
                 // jTextArea1.setText(new String(b));
                 fis.close();
 
@@ -342,24 +358,9 @@ public class conversation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_attach1ActionPerformed
 
-    private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
-        // TODO add your handling code here:
-        Color initialBackground = this.getBackground();
-        Color colorChooser = JColorChooser.showDialog(null,"JColorChooser Sample", initialBackground);
-        text1.setForeground(colorChooser);
-        
-    }//GEN-LAST:event_colorActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void fontChooserComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fontChooserComboBoxActionPerformed
-        // TODO add your handling code here:
-        String selectedItem=(String) fontChooserComboBox.getSelectedItem();
-        Font font=new Font(selectedItem,Font.BOLD,12);
-        text1.setFont(font);
-    }//GEN-LAST:event_fontChooserComboBoxActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -373,8 +374,88 @@ public class conversation extends javax.swing.JFrame {
         gui.rooms.remove(room.getRoomId());
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void fontChooserComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fontChooserComboBoxActionPerformed
+
+        try {
+            // TODO add your handling code here:
+            String selectedItem = (String) fontChooserComboBox.getSelectedItem();
+            Font font = new Font(selectedItem, Font.BOLD, 14);
+            StyleConstants.setForeground(keyWord, colorChooser);
+            StyleConstants.setFontFamily(keyWord, font.getFamily());
+            doc.insertString(doc.getLength(), " ", keyWord);
+            doc2.insertString(doc2.getLength(), " ", keyWord);
+
+            // text1.setFont(font);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_fontChooserComboBoxActionPerformed
+
+    private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
+        try {
+            // TODO add your handling code here:
+            Color initialBackground = this.getBackground();
+            colorChooser = JColorChooser.showDialog(null, "JColorChooser Sample", initialBackground);
+            // text1.setForeground(colorChooser);
+            if (colorChooser != null) {
+                color.setBackground(colorChooser);
+            }
+
+            SimpleAttributeSet keyWord = new SimpleAttributeSet();
+            StyleConstants.setForeground(keyWord, colorChooser);
+            doc.insertString(doc.getLength(), " ", keyWord);
+            doc2.insertString(doc2.getLength(), " ", keyWord);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_colorActionPerformed
+//sarah 
+
+    private class ComboRenderer extends BasicComboBoxRenderer {
+
+        private static final long serialVersionUID = 1L;
+        private JComboBox comboBox;
+        final DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+        private int row;
+
+        private ComboRenderer(JComboBox fontsBox) {
+            comboBox = fontsBox;
+        }
+
+        private void manItemInCombo() {
+            if (comboBox.getItemCount() > 0) {
+                final Object comp = comboBox.getUI().getAccessibleChild(comboBox, 0);
+                if ((comp instanceof JPopupMenu)) {
+                    final JList list = new JList(comboBox.getModel());
+                    final JPopupMenu popup = (JPopupMenu) comp;
+                    final JScrollPane scrollPane = (JScrollPane) popup.getComponent(0);
+                    final JViewport viewport = scrollPane.getViewport();
+                    final Rectangle rect = popup.getVisibleRect();
+                    final Point pt = viewport.getViewPosition();
+                    row = list.locationToIndex(pt);
+                }
+            }
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (list.getModel().getSize() > 0) {
+                manItemInCombo();
+            }
+            final JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, row, isSelected, cellHasFocus);
+            final Object fntObj = value;
+            final String fontFamilyName = (String) fntObj;
+            setFont(new Font(fontFamilyName, Font.PLAIN, 16));
+            return this;
+        }
+    }
+    //sarah
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton attach1;
+    private javax.swing.JTextPane chatJpane;
     private javax.swing.JButton color;
     private javax.swing.JComboBox fontChooserComboBox;
     public javax.swing.JLabel img1;
@@ -383,50 +464,52 @@ public class conversation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JTextField jTextField1;
+    private javax.swing.JTextPane mainJpane;
     public javax.swing.JLabel name;
     private javax.swing.JButton saveMessage;
     private javax.swing.JButton send1;
-    public javax.swing.JTextArea text1;
-    public javax.swing.JTextArea text2;
     // End of variables declaration//GEN-END:variables
 }
 
-class MyJpgFilter extends FileFilter{
-    public boolean accept(File f){
-        if((f.getName().toLowerCase().endsWith(".jpg"))||(f.isDirectory())){
+class MyJpgFilter extends FileFilter {
+
+    public boolean accept(File f) {
+        if ((f.getName().toLowerCase().endsWith(".jpg")) || (f.isDirectory())) {
             return true;
-        }
-        else 
+        } else {
             return false;
+        }
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return "JPG Files (.jpg)";
     }
 }
 
-class MyFileView extends FileView{
-    public Icon getIcon(File f){
-        if(f.isDirectory()){
-            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/dir.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-            ImageIcon icon=new ImageIcon(img);
-            return icon;
-        }
-        if(f.isFile()){
-            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/file.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-            ImageIcon icon=new ImageIcon(img);
-            return icon;
-        }
-        if((f.getName().toLowerCase().endsWith(".jpg"))){
-            Image img=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/image.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-            ImageIcon icon=new ImageIcon(img);
-            return icon;
-        }
-        else 
-            return null;
-    }
-   
-}
+class MyFileView extends FileView {
 
+    public Icon getIcon(File f) {
+        if (f.isDirectory()) {
+            Image img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/dir.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(img);
+            return icon;
+        }
+        if (f.isFile()) {
+            Image img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/file.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(img);
+            return icon;
+        }
+        if ((f.getName().toLowerCase().endsWith(".jpg"))) {
+            Image img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login/image.jpg")).getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(img);
+            return icon;
+        } else {
+            return null;
+        }
+    }
+
+}
