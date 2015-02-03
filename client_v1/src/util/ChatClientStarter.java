@@ -35,9 +35,9 @@ public class ChatClientStarter {
         
     }
     public static void main(String [] args){
-        /*try {
+        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("motif".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -50,7 +50,7 @@ public class ChatClientStarter {
             java.util.logging.Logger.getLogger(chatCui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(chatCui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }*/
+        }
         new ChatClientStarter();
     }
 }
