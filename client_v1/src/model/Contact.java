@@ -54,4 +54,5 @@ public class Contact implements IContact{
         return state;
     }
     
+    
 }

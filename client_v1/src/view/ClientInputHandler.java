@@ -99,6 +99,7 @@ public class ClientInputHandler implements IClientInputHandler {
 
     @Override
     public void addContact(User user,String mail) {
+        
         Contact con=new Contact(mail, null, null, null, 0);
         ca.setCon(con);
         ca.setUser(user);
