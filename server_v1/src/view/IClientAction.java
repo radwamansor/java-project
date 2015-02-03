@@ -45,9 +45,12 @@ public interface IClientAction extends Serializable {
    public int getContIdx();
 
     
-     public FileInputStream getImage();
+   public FileInputStream getImage();
 
     public void setImage(FileInputStream image);
-
+    
+    public String getFilename();
+    
+    public void setFilename(String filename);
 
 }

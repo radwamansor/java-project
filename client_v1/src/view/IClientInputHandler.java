@@ -19,7 +19,7 @@ import rmi.client.IClientListener;
  */
 public interface IClientInputHandler {
     
-    public void sendFile(Room room,byte[] bs);
+    public void sendFile(Room room,byte[] bs,String name,User user);
     public void reciveFile(byte[] bs);
     public void signUp(User user);
     public void signIn(User user);

@@ -90,7 +90,7 @@ public class ServerController implements IserverController {
                  break;
             case ActionType.SEND_FILE:
                // System.out.println("need to send file");
-                chatController.sendFile(clientAction.getRoom(),clientAction.getB());
+                chatController.sendFile(clientAction.getRoom(),clientAction.getB(),clientAction.getFilename(),clientAction.getUser());
                 break;
         }
     }

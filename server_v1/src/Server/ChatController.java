@@ -68,7 +68,7 @@ public class ChatController implements IChatController {
     }
 
     @Override
-    public void sendFile(Room room, byte[] bs) {
+    public void sendFile(Room room, byte[] bs,String filename,User user) {
 
         Vector<Contact> conts = room.contactVector;
 
@@ -77,7 +77,9 @@ public class ChatController implements IChatController {
                 IChatModel model = new ChatModel();
                 model.setServiceNumber(ModelType.RECICVE_FILE);
                 model.setBs(bs);
+                model.setFileName(filename);
                 model.setRoom(room);
+                model.setUser(user);
                 onlineUsers.get(conts.get(i).getEmail()).changeModel(model);
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,6 +136,7 @@ public class ChatController implements IChatController {
     @Override
     public void addContact(User user, Contact contact) {
         boolean flag = userData.validateMail(contact.getEmail());
+        
        // boolean flag1=userData.selectFriend(user, contact.getEmail());
         // System.out.println(flag1);
        /* if(flag1==true){
@@ -146,7 +149,7 @@ public class ChatController implements IChatController {
          Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
          }
          }*/
-        if (flag) {
+        if (flag && user.getUserEmail().equals(contact.getEmail())==false ) {
             try {
 
                 boolean send = userData.addContact(user.getUserEmail(), contact.getEmail());
@@ -171,12 +174,22 @@ public class ChatController implements IChatController {
             }
 
         } else {
-            try {
-                chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
-                chatModel.setJoptionPaneMassage("E-Mail Not Found");
-                onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
-            } catch (RemoteException ex) {
-                Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+            if(flag==false){
+                try {
+                    chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
+                    chatModel.setJoptionPaneMassage("E-Mail Not Found");
+                    onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else {
+                try {
+                    chatModel.setServiceNumber(ModelType.REQUEST_NOT_SEND);
+                    chatModel.setJoptionPaneMassage("You May send Request to Yourself:)");
+                    onlineUsers.get(user.getUserEmail()).changeModel(chatModel);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         }
@@ -367,7 +380,7 @@ public class ChatController implements IChatController {
                 }
             } else {
                 try {
-                    chatModel.setJoptionPaneMassage("wrong password");
+                    chatModel.setJoptionPaneMassage("Invalid password");
                     chatModel.setServiceNumber(ModelType.SERROR_MESSAGE);
                     clientListener.changeModel(chatModel);
                 } catch (RemoteException ex) {
@@ -376,7 +389,7 @@ public class ChatController implements IChatController {
             }
         } else {
             try {
-                chatModel.setJoptionPaneMassage("invalid Email");
+                chatModel.setJoptionPaneMassage("Invalid Email");
                 chatModel.setServiceNumber(ModelType.SERROR_MESSAGE);
                 clientListener.changeModel(chatModel);
             } catch (RemoteException ex) {

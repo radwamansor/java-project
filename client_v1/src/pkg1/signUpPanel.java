@@ -6,6 +6,7 @@
 
 package pkg1;
 
+import java.awt.CardLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -28,7 +29,7 @@ public class signUpPanel extends javax.swing.JPanel {
 
     public signUpPanel(chatCui gui, ClientInputHandler cih) {
         initComponents();
-        ImageIcon i = new ImageIcon("src\\pkg1\\skype.png");
+        ImageIcon i =new ImageIcon(getClass().getResource("/login/skype.png"));
         jLabel1.setIcon(i);
         this.gui = gui;
         try {
@@ -64,6 +65,8 @@ public class signUpPanel extends javax.swing.JPanel {
         jPasswordField2 = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+
+        setBackground(new java.awt.Color(25, 173, 250));
 
         jLabel1.setBackground(new java.awt.Color(21, 160, 250));
         jLabel1.setText("jLabel1");
@@ -179,6 +182,11 @@ public class signUpPanel extends javax.swing.JPanel {
         jLabel3.setToolTipText("");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         jComboBox1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -192,9 +200,6 @@ public class signUpPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -215,8 +220,11 @@ public class signUpPanel extends javax.swing.JPanel {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,25 +402,25 @@ public class signUpPanel extends javax.swing.JPanel {
         boolean unf=false;
         
         if(!p1.equals(p2))
-            JOptionPane.showMessageDialog(null, "different password");
+            JOptionPane.showMessageDialog(null, "Invalid password");
         else pf=true;
         if(!em1.equals(em2))
-            JOptionPane.showMessageDialog(null, "different Email");
+            JOptionPane.showMessageDialog(null, "Invalid Email");
         else emf=true;
         if(emf) {
             if(!u.setUserEmail(em2)) {
                 emf = false;
-                JOptionPane.showMessageDialog(null, "bad Email format");
+                JOptionPane.showMessageDialog(null, "Invalid Email format");
             }
         }
         if(pf){
             if(!u.setUserPassword(p1)){
-                JOptionPane.showMessageDialog(null, "bad Password format");
+                JOptionPane.showMessageDialog(null, "Invalid Password format");
             }
         }
         if(u.setUserName(uName))
             unf = true;
-        else JOptionPane.showMessageDialog(null, "bad User Name format");
+        else JOptionPane.showMessageDialog(null, "Invalid User Name format");
 
         if(pf && emf && unf){
             System.out.println(uName);
@@ -424,6 +432,15 @@ public class signUpPanel extends javax.swing.JPanel {
         cih.signUp(u);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        CardLayout card = (CardLayout) gui.parentPanel.getLayout();
+        signInPanel signIn=new signInPanel(gui,cih);
+        gui.parentPanel.add("signin", gui.add(signIn));
+        card.show(gui.parentPanel, "signin");
+        
+        
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
