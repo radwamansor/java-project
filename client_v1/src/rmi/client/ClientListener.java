@@ -181,6 +181,7 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
         });
                     Contact c1 = chatModel.getContact();
                     request r1 = new request();
+                    System.out.println(c1.getPhoto());
                     ImageIcon ico1 = new ImageIcon(c1.getPhoto());
                     r1.img.setIcon(ico1);
                     r1.name.setText(c1.getName());
