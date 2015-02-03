@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import jdk.nashorn.internal.parser.TokenType;
 import model.Contact;
@@ -77,27 +78,29 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
 
             case ModelType.RECIEVE_MESSAGE:
                 //boolean foundId = false;
-                int docLength = gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.getLength();
+                
                 if (!gui.rooms.containsKey(chatModel.getRoom().getRoomId())) {
                     try {
+                        int docLength = gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.getLength();
                         conversation conv = new conversation(gui, chatModel.getRoom());
                         conv.setRoom(chatModel.getRoom());
                         conv.setVisible(true);
                         gui.rooms.put(chatModel.getRoom().getRoomId(), conv);
                         //  gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
                         gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.insertString(docLength, "\n" + chatModel.getMsg().getSender() + ":" + chatModel.getMsg().getTxt(),
-                                gui.rooms.get(chatModel.getRoom().getRoomId()).keyWord);
+                                chatModel.getMsg().getKeyWord());
                     } catch (BadLocationException ex) {
                         Logger.getLogger(ClientListener.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     try {
+                        int docLength = gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.getLength();
                         gui.rooms.get(chatModel.getRoom().getRoomId()).setVisible(true);
                         gui.rooms.get(chatModel.getRoom().getRoomId()).setRoom(chatModel.getRoom());
                 //gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
                         //  gui.rooms.get(chatModel.getRoom().getRoomId()).text2.append("\n" + chatModel.getMsg().getSender() + " : " + chatModel.getMsg().getTxt());
                         gui.rooms.get(chatModel.getRoom().getRoomId()).doc2.insertString(docLength, "\n" + chatModel.getMsg().getSender() + ":" + chatModel.getMsg().getTxt(),
-                                gui.rooms.get(chatModel.getRoom().getRoomId()).keyWord);
+                                chatModel.getMsg().getKeyWord());
 
                         System.out.println("room id  :  " + chatModel.getRoom().getRoomId());
                     } catch (BadLocationException ex) {
@@ -184,18 +187,9 @@ public class ClientListener extends UnicastRemoteObject implements IClientListen
                     gui.mess.requestsPanel.add(r1);
                     r1.accept.addActionListener(new ActionListener() {
 
-                    @Override
-                    public void run() {
-                        JOptionPane.showMessageDialog(null, chatModel.getJoptionPaneMassage());
-                    }
-                });
-                Contact c1 = chatModel.getContact();
-                request r1 = new request();
-                /* ImageIcon ico1 = new ImageIcon(c1.getPhoto());
-                 r1.img.setIcon(ico1);*/
-                r1.name.setText(c1.getName());
-                gui.mess.requestsPanel.add(r1);
-                r1.accept.addActionListener(new ActionListener() {
+                    
+
+
 
                     @Override
                     public void actionPerformed(ActionEvent e) {

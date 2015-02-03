@@ -7,12 +7,16 @@ package pkg1;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import static java.awt.Font.BOLD;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -67,8 +71,9 @@ public class conversation extends javax.swing.JFrame {
     public StyledDocument doc;
     public StyledDocument doc2;
     // Define a keyword attribute...sarah
-    public SimpleAttributeSet keyWord = new SimpleAttributeSet();
+    public SimpleAttributeSet keyWord;
     Color colorChooser;
+    Font font;
 
     //sarah
     private String roomId;
@@ -95,14 +100,51 @@ public class conversation extends javax.swing.JFrame {
     }
 
     public conversation(chatCui gui, Room room) {
-        //super(parent, modal);
-        initComponents();
-        this.user = gui.user;
-        this.room = room;
-        setSize(700, 700);
-        this.gui = gui;
-        friendList = new FriendList(gui, user, this);
+        try {
+            //super(parent, modal);
+            initComponents();
+            this.user = gui.user;
+            this.room = room;
+            setSize(700, 700);
+            this.gui = gui;
+            friendList = new FriendList(gui, user, this);
+            keyWord = new SimpleAttributeSet();
+            colorChooser = Color.BLACK;
+            font = new Font("Tahoma", Font.PLAIN, 14);
+            StyleConstants.setForeground(keyWord, colorChooser);
+            StyleConstants.setFontFamily(keyWord, font.getFamily());
+            doc2=mainJpane.getStyledDocument();
+            doc=chatJpane.getStyledDocument();
+            chatJpane.setText(" ");
+            mainJpane.setText(" ");
+            
+            
+            GraphicsEnvironment obj = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            String[] fontFamilies = obj.getAvailableFontFamilyNames();
+            for (String fontFamilie : fontFamilies) {
+                fontChooserComboBox.addItem(fontFamilie);
+            }
+            fontChooserComboBox.setRenderer(new ComboRenderer(fontChooserComboBox));
+            fontChooserComboBox.addItemListener(new ItemListener() {
+                
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        final String fontName = fontChooserComboBox.getSelectedItem().toString();
+                        fontChooserComboBox.setFont(new Font(fontName, Font.PLAIN, 16));
+                    }
+                }
+            });
+            fontChooserComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            color.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            doc2.insertString(0, " ", null);
+            doc.insertString(0, " ", null);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -286,8 +328,8 @@ public class conversation extends javax.swing.JFrame {
         String s = chatJpane.getText();
 
         Message m = new Message(roomId, null, user.getUserName(), s, true);
-        IClientInputHandler cih = new ClientInputHandler();
-        cih.sendMessage(room, m);
+        m.setKeyWord(keyWord);
+        gui.cih.sendMessage(room, m);
     }//GEN-LAST:event_send1ActionPerformed
 
     private void saveMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMessageActionPerformed
@@ -379,11 +421,13 @@ public class conversation extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             String selectedItem = (String) fontChooserComboBox.getSelectedItem();
-            Font font = new Font(selectedItem, Font.BOLD, 14);
-            StyleConstants.setForeground(keyWord, colorChooser);
+            font = new Font(selectedItem, Font.BOLD, 14);
+            //StyleConstants.setForeground(keyWord, colorChooser);
             StyleConstants.setFontFamily(keyWord, font.getFamily());
+
             doc.insertString(doc.getLength(), " ", keyWord);
-            doc2.insertString(doc2.getLength(), " ", keyWord);
+
+            //doc2.insertString(doc2.getLength(), " ", keyWord);
 
             // text1.setFont(font);
         } catch (BadLocationException ex) {
@@ -401,10 +445,12 @@ public class conversation extends javax.swing.JFrame {
                 color.setBackground(colorChooser);
             }
 
-            SimpleAttributeSet keyWord = new SimpleAttributeSet();
+            //SimpleAttributeSet keyWord = new SimpleAttributeSet();
             StyleConstants.setForeground(keyWord, colorChooser);
+            
             doc.insertString(doc.getLength(), " ", keyWord);
-            doc2.insertString(doc2.getLength(), " ", keyWord);
+
+//            doc2.insertString(doc2.getLength(), " ", keyWord);
         } catch (BadLocationException ex) {
             Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -465,7 +511,6 @@ public class conversation extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JTextField jTextField1;
     private javax.swing.JTextPane mainJpane;

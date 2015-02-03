@@ -104,9 +104,9 @@ public class messenger extends javax.swing.JPanel {
             ContactPanel cont = new ContactPanel(window,user.userContacts.get(i));
             cont.name.setText(user.userContacts.get(i).getName());
             cont.status.setText(user.userContacts.get(i).getStatus());
-            //ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
+//            ImageIcon ic =new ImageIcon(user.userContacts.get(i).getPhoto());
             contacts.put(user.userContacts.get(i).getEmail(), cont);
-            cont.img.setIcon(ic);
+//            cont.img.setIcon(ic);
 //            cont.state.setIcon(stateColor[user.userContacts.get(i).getState()-1]);
             contactsPanel.add(cont);
            
