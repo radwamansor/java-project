@@ -120,7 +120,12 @@ public class messenger extends javax.swing.JPanel {
             String i=it.next();
             Contact c = user.userRequests.get(i);
             request r = new request();
-            ImageIcon ico =new ImageIcon(c.getPhoto());
+            ImageIcon ico;
+            if(c.getPhoto() == null){
+                ico = new ImageIcon(getClass().getResource("/pkg1/m.jpg"));
+            } else {
+                ico =new ImageIcon(c.getPhoto());
+            }
             r.img.setIcon(ico);
             r.name.setText(c.getName());
             requestsPanel.add(r);            
@@ -284,7 +289,7 @@ public class messenger extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +335,7 @@ public class messenger extends javax.swing.JPanel {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -363,8 +368,8 @@ public class messenger extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         
-       IClientInputHandler cih=new ClientInputHandler();
-       cih.addContact(user,contactMail.getText());
+       //IClientInputHandler cih=new ClientInputHandler();
+       window.cih.addContact(user,contactMail.getText());
        
     }//GEN-LAST:event_jButton1ActionPerformed
 

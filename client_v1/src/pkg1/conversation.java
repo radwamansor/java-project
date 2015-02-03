@@ -99,33 +99,44 @@ public class conversation extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         text1 = new javax.swing.JTextArea();
         saveMessage = new javax.swing.JButton();
-        attach2 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
         attach1 = new javax.swing.JButton();
         color = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         fontChooserComboBox = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(25, 173, 250));
+        setMaximumSize(new java.awt.Dimension(300, 270));
+        setPreferredSize(new java.awt.Dimension(300, 270));
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.CardLayout());
 
         jPanel2.setBackground(new java.awt.Color(25, 173, 250));
-        jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jPanel2.setMaximumSize(new java.awt.Dimension(320, 280));
         jPanel2.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanel2.setPreferredSize(new java.awt.Dimension(450, 426));
+        jPanel2.setPreferredSize(new java.awt.Dimension(320, 280));
+        jPanel2.setLayout(null);
 
         img1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/Person_1.png"))); // NOI18N
         img1.setText("jLabel1");
+        jPanel2.add(img1);
+        img1.setBounds(12, 12, 80, 80);
 
         name.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         name.setForeground(new java.awt.Color(255, 255, 255));
         name.setText("name");
+        jPanel2.add(name);
+        name.setBounds(104, 17, 165, 24);
 
         text2.setColumns(20);
         text2.setRows(5);
         jScrollPane3.setViewportView(text2);
+
+        jPanel2.add(jScrollPane3);
+        jScrollPane3.setBounds(12, 112, 502, 170);
 
         send1.setBackground(new java.awt.Color(25, 173, 250));
         send1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -136,14 +147,21 @@ public class conversation extends javax.swing.JFrame {
                 send1ActionPerformed(evt);
             }
         });
+        jPanel2.add(send1);
+        send1.setBounds(456, 349, 56, 35);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(20, 20));
         jPanel3.setMinimumSize(new java.awt.Dimension(20, 20));
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel2.add(jPanel3);
+        jPanel3.setBounds(520, 296, 166, 0);
 
         text1.setColumns(20);
         text1.setRows(5);
         jScrollPane4.setViewportView(text1);
+
+        jPanel2.add(jScrollPane4);
+        jScrollPane4.setBounds(12, 332, 438, 73);
 
         saveMessage.setBackground(new java.awt.Color(63, 129, 179));
         saveMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -158,17 +176,8 @@ public class conversation extends javax.swing.JFrame {
                 saveMessageActionPerformed(evt);
             }
         });
-
-        attach2.setMaximumSize(new java.awt.Dimension(35, 35));
-        attach2.setMinimumSize(new java.awt.Dimension(0, 0));
-        attach2.setPreferredSize(new java.awt.Dimension(35, 35));
-        attach2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                attach2ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(saveMessage);
+        saveMessage.setBounds(463, 12, 51, 35);
 
         attach1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/file_1.png"))); // NOI18N
         attach1.setMaximumSize(new java.awt.Dimension(35, 35));
@@ -179,6 +188,8 @@ public class conversation extends javax.swing.JFrame {
                 attach1ActionPerformed(evt);
             }
         });
+        jPanel2.add(attach1);
+        attach1.setBounds(16, 294, 55, 35);
 
         color.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg1/colorgrid.gif"))); // NOI18N
         color.setText("jButton1");
@@ -187,6 +198,8 @@ public class conversation extends javax.swing.JFrame {
                 colorActionPerformed(evt);
             }
         });
+        jPanel2.add(color);
+        color.setBounds(77, 294, 51, 35);
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(191, 225, 252));
@@ -198,10 +211,14 @@ public class conversation extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jPanel2.add(jTextField1);
+        jTextField1.setBounds(157, 53, 201, 23);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("status");
+        jPanel2.add(jLabel1);
+        jLabel1.setBounds(104, 54, 46, 20);
 
         fontChooserComboBox.setBackground(new java.awt.Color(63, 129, 179));
         fontChooserComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -212,6 +229,8 @@ public class conversation extends javax.swing.JFrame {
                 fontChooserComboBoxActionPerformed(evt);
             }
         });
+        jPanel2.add(fontChooserComboBox);
+        fontChooserComboBox.setBounds(134, 296, 116, 33);
 
         jButton1.setBackground(new java.awt.Color(63, 129, 179));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -222,102 +241,22 @@ public class conversation extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel2.add(jButton1);
+        jButton1.setBounds(414, 295, 100, 36);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(img1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(167, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(4, 4, 4)
-                                        .addComponent(attach1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(fontChooserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(saveMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(send1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(438, 438, 438)
-                                .addComponent(attach2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(img1)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(attach2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(attach1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(saveMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fontChooserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(send1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
+        jButton3.setBackground(new java.awt.Color(63, 129, 179));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("leave conversation");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3);
+        jButton3.setBounds(262, 295, 146, 36);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel2, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -367,10 +306,6 @@ public class conversation extends javax.swing.JFrame {
             Logger.getLogger(conversation.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }//GEN-LAST:event_saveMessageActionPerformed
-
-    private void attach2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attach2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_attach2ActionPerformed
 
     private void attach1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attach1ActionPerformed
         ImageIcon i = new ImageIcon("src/pkg1/file.png");
@@ -422,14 +357,20 @@ public class conversation extends javax.swing.JFrame {
         friendList.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        room.contactVector.remove(user);
+        setEnabled(false);
+        gui.rooms.remove(room.getRoomId());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton attach1;
-    private javax.swing.JButton attach2;
     private javax.swing.JButton color;
     private javax.swing.JComboBox fontChooserComboBox;
     public javax.swing.JLabel img1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

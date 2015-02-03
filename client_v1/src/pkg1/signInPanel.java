@@ -223,7 +223,7 @@ public class signInPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         User u=new User();
-        String p1 = new String(jPasswordField1.getText());
+        String p1 = new String(jPasswordField1.getPassword());
         String em1 = new String(jTextField2.getText());
 
         boolean pf=true;
