@@ -186,7 +186,8 @@ public class UserData {
                      if(ChatController.onlineState.containsKey(rs1.getString(1))){
                          state=ChatController.onlineState.get(rs1.getString(1));
                      }
-                     Contact cont=new Contact(rs1.getString(1),rs1.getString(2) , "Chat model", image, state);   
+                     Contact cont=new Contact(rs1.getString(1),rs1.getString(2) , rs1.getString(5), image, state); 
+                     System.out.println("image in database"+image);
                      
                      user.userContacts.add(cont);
                 }

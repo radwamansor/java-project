@@ -157,7 +157,10 @@ public class ChatController implements IChatController {
                 if (send) {
                     chatModel.setServiceNumber(ModelType.REQUEST_SEND);
                     chatModel.setJoptionPaneMassage("Request Send");
-                    chatModel.setContact(contact);
+                    User user1=(userData.selectUser(contact.getEmail()));
+                    Contact c=new Contact(user1.getUserEmail(), user1.getUserName(),user1.getUserGender(), user1.getUserImage(), 1);
+                    chatModel.setContact(c);
+                    //chatModel.setContact(contact);
                     if (onlineUsers.containsKey(contact.getEmail())) {
                         onlineUsers.get(contact.getEmail()).changeModel(chatModel);
                     } else {
