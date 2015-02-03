@@ -33,7 +33,7 @@ public interface IChatController {
 
     public void changeStatus(User user);
 
-    public void ChangeProfilePic(User user,FileInputStream image);
+    public void ChangeProfilePic(User user, byte[] bs);
 
     public void leaveConversation(String email);
 

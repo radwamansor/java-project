@@ -124,24 +124,22 @@ public class ClientInputHandler implements IClientInputHandler {
     }
 
     @Override
-    public void changePhoto(User user,String path) {
-        try {
+    public void changePhoto(User user,byte[] bs) {
+        
             ca.setUser(user);
-            FileInputStream fis=null;
-            File file = new File(path);
-            fis = new FileInputStream(file);
-            ca.setImage(fis);
+            ca.setImage(bs);
             ca.setServiceNum(ActionType.CHANGE_PHOTO);
             try {
                 sl.processClientAction(ca);
             } catch (RemoteException ex) {
                 Logger.getLogger(ClientInputHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ClientInputHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            
     }
+        
 
+
+    
     @Override
     public void changeStatus(User user) {
         ca.setUser(user);

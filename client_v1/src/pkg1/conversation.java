@@ -455,7 +455,7 @@ public class conversation extends javax.swing.JFrame {
 
 class MyJpgFilter extends FileFilter{
     public boolean accept(File f){
-        if((f.getName().toLowerCase().endsWith(".jpg"))||(f.isDirectory())){
+        if((f.getName().toLowerCase().endsWith(".jpg"))||(f.isDirectory()) || (f.getName().toLowerCase().endsWith(".png"))){
             return true;
         }
         else 
